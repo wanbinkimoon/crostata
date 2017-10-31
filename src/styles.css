@@ -1,11 +1,45 @@
 body {
   display: flex;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: midnightblue;
+  background-color: whitesmoke;
+  font-family: 'SF Pro Text', 'Helvetica Neue';
 }
-  
-body > svg {
-  fill: crimson;
+
+body > * > * {
+  width: 960px;
+  position: relative;
+  margin: 0 auto;
+  padding: 40px 0 16px;
+}
+
+header {
+  background: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  display: flex;
+  font-weight: 900;
+}
+
+svg rect.feedback {
+  fill: #ee294e;
+}
+svg rect.rispetto {
+  fill: #ffd166;
+}
+svg rect.comunicazione {
+  fill: #06d6a0;
+}
+svg rect.semplicità {
+  fill: #118ab2;
+}
+svg rect.coraggio {
+  fill: #073b4c;
 }

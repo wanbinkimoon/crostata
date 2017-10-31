@@ -1,23 +1,22 @@
 import * as d3 from 'd3'
 import '../styles.css'
 import dataset from './data.json'
-
-console.log(dataset)
+import colors from '../colors.json'
 const { data } = dataset
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-width = 960 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom;
+const margin = {top: 20, right: 20, bottom: 30, left: 40}
+const width = 960 - margin.left - margin.right
+const height = 500 - margin.top - margin.bottom
 
 // set the ranges
-var x0 = d3.scaleBand().range([0, width]).padding(.5);
-var x1 = d3.scaleBand().padding(.5);
-var y = d3.scaleLinear().range([height, 0]);
+const x0 = d3.scaleBand().range([0, width]).padding(.25);
+const x1 = d3.scaleBand().padding(0);
+const y = d3.scaleLinear().range([height, 0]);
       
 // append the svg object to the body of the page
 // append a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg")
+const svg = d3.select("main").append("svg")
 .attr("width", width + margin.left + margin.right)
 .attr("height", height + margin.top + margin.bottom)
 .append("g")
@@ -36,7 +35,7 @@ svg.append("g")
   .selectAll("g")
   .data(data)
   .enter().append("g")
-    .attr("transform", function(d) { return "translate(" + x0(d.name) + ",0)"; })
+    .attr("transform", (d) => `translate( ${x0(d.name)} ,0)`)
   .selectAll("rect")
   .data(d => d.vote.map(d => {return {key: d.axis, value: d.value }}))
   .enter().append('rect')
@@ -44,6 +43,7 @@ svg.append("g")
     .attr("y", d => y(d.value))
     .attr("width", x1.bandwidth())
     .attr("height", d => height - y(d.value))
+    .attr("class", d => d.key.toLowerCase())
 
 
 // add the x Axis
