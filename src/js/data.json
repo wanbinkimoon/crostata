@@ -1,7 +1,7 @@
 {"data" : 
   [
     { 
-      "name": "Nicola Bertelloni",
+      "name": "Nicola B",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":3},
@@ -11,7 +11,7 @@
         {"axis":"Coraggio","value":5}
       ]
     },{ 
-      "name": "Massimiliano Mauro",
+      "name": "Massimiliano M",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":2},
@@ -21,7 +21,7 @@
         {"axis":"Coraggio","value":3}
       ]
     },{ 
-      "name": "Ivan Pugliese",
+      "name": "Ivan P",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":3},
@@ -31,7 +31,7 @@
         {"axis":"Coraggio","value":4}
       ]			
   },{ 
-      "name": "Raffaele Boiano",
+      "name": "Raffaele B",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -41,7 +41,7 @@
         {"axis":"Coraggio","value":3}
       ]			
     },{ 
-      "name": "Francesco Bolici",
+      "name": "Francesco B",
       "core": false,
       "vote":[
         {"axis":"Feedback","value":3},
@@ -51,7 +51,7 @@
         {"axis":"Coraggio","value":3}
       ]			
     },{ 
-      "name": "Lorenzo Fresh",
+      "name": "Lorenzo F",
       "core": false,
       "vote":[
         {"axis":"Feedback","value":3},
@@ -71,7 +71,7 @@
         {"axis":"Coraggio","value":4}
       ]			
     },{ 
-      "name": "Francesco Vetica",
+      "name": "Francesco V",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -81,7 +81,7 @@
         {"axis":"Coraggio","value":4}
       ]			
     },{ 
-      "name": "Domenico Polimeno",
+      "name": "Domenico P",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -91,7 +91,7 @@
         {"axis":"Coraggio","value":5}
       ]			
     },{ 
-      "name": "Nicola Romanelli",
+      "name": "Nicole R",
       "core": false,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -101,7 +101,7 @@
         {"axis":"Coraggio","value":5}
       ]			
     },{ 
-      "name": "Gaia Zuccaro",
+      "name": "Gaia Z",
       "core": false,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -111,7 +111,7 @@
         {"axis":"Coraggio","value":5}
       ]			
     },{ 
-      "name": "Stefano Stravato",
+      "name": "Stefano S",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":4},
@@ -121,7 +121,7 @@
         {"axis":"Coraggio","value":5}
       ]			
     },{ 
-      "name": "Mino Parisi",
+      "name": "Mino P",
       "core": true,
       "vote":[
         {"axis":"Feedback","value":3},

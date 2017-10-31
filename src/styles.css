@@ -23,6 +23,12 @@ header {
   align-items: center;
 }
 
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 h1 {
   display: flex;
   font-weight: 900;
@@ -42,4 +48,9 @@ svg rect.semplicità {
 }
 svg rect.coraggio {
   fill: #073b4c;
+}
+
+svg text {
+  font-family: 'SF Pro Text', 'Helvetica Neue';
+  font-size: 10px;
 }
