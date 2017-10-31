@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-// import data from '../dataset.json'
+import '../styles.css'
 import dataset from './data.json'
 
 console.log(dataset)
@@ -10,11 +10,8 @@ width = 960 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
 
 // set the ranges
-var x = d3.scaleBand()
-      .range([0, width])
-      .padding(0.1);
-var y = d3.scaleLinear()
-      .range([height, 0]);
+var x = d3.scaleBand().range([0, width]).padding(.5);
+var y = d3.scaleLinear().range([height, 0]);
       
 // append the svg object to the body of the page
 // append a 'group' element to 'svg'
@@ -28,7 +25,8 @@ var svg = d3.select("body").append("svg")
 
 // Scale the range of the data in the domains
 x.domain(data.map((d) => d.name));
-y.domain([0, d3.max(data, (d) => d.vote[0].value)]);
+y.domain([0, 5]);
+// y.domain([0, d3.max(data, (d) => d.vote[0].value)]);
 
 // append the rectangles for the bar chart
 svg.selectAll(".bar")
@@ -43,7 +41,7 @@ svg.selectAll(".bar")
 // add the x Axis
 svg.append("g")
   .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x));
+  .call(d3.axisBottom(x))
 
 // add the y Axis
 svg.append("g")

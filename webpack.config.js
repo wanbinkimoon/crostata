@@ -1,11 +1,15 @@
 const webpack = require('webpack')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  context: __dirname + "/src",
-  entry: "./js/app.js",
+  context: path.resolve(__dirname, 'src'),
+  entry: {
+    app: './js/app.js',
+  },
   output: {
-    path: __dirname + "/dist",
-    filename: "./js/bundle.js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
   },
   module: {
     loaders: [
@@ -21,19 +25,19 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'json-loader',
       }, {
-        test: /\.html$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-      }, {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: [ 'style-loader', 'css-loader' ],
       }
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV), 
+    }), 
+    new HtmlWebpackPlugin({
+      title: 'Granelli – dataviz',
+      template: 'index.html'
     })
   ]
 }
