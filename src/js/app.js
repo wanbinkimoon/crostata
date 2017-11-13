@@ -2,9 +2,8 @@ import * as d3 from 'd3'
 import '../styles.css'
 import dataset from './data.json'
 import colors from '../colors.json'
-const {
-  data
-} = dataset
+import chroma from 'chroma-js'
+const { data } = dataset
 
 const margin = {
   top: 20,
@@ -19,10 +18,11 @@ const x1 = d3.scaleBand().padding(0);
 const y = d3.scaleLinear().range([height, 0]);
 
 const legend = d3.select('main').append("svg")
+  .attr("height",'640')
   .append("g")
   .attr("text-anchor", "start")
   .selectAll("g")
-  .data(data[0].vote.map(d => d.axis))
+  .data(data.map(d => d.name))
   .enter().append("g")
   .attr("transform", (d, i) => `translate(0, ${i * 20})`)
   .on('mouseenter', d => data[0].vote.filter(
@@ -37,7 +37,7 @@ legend.append("rect")
   .attr("x", 0)
   .attr("width", 19)
   .attr("height", 19)
-  .attr("class", d => d.toLowerCase());
+  .attr("fill", (d, i) => colors.colors[i]);
 
 legend.append("text")
   .attr("x", 24)
@@ -98,20 +98,21 @@ var RadarChart = {
         .attr("x2", (d, i) => levelFactor * (1 - cfg.factor * Math.sin((i + 1) * cfg.radians / total)))
         .attr("y2", (d, i) => levelFactor * (1 - cfg.factor * Math.cos((i + 1) * cfg.radians / total)))
         .attr("class", "line")
-        .style("stroke", "grey")
+        .style("stroke", "tomato")
         .style("stroke-opacity", "0.75")
         .style("stroke-width", "0.3px")
         .attr("transform", "translate(" + (cfg.w / 2 - levelFactor) + ", " + (cfg.h / 2 - levelFactor) + ")");
     }
-    console.log(cfg.levels)
+
     cfg.levels.map((d,i) => {
-      var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
+      const levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels.length);
+
       g.selectAll(".levels")
-        .data([1])
+        .data([i])
         .enter()
         .append("svg:text")
-        .attr("x", (d) => levelFactor * (1 - cfg.factor * Math.sin(0)))
-        .attr("y", (d) => levelFactor * (1 - cfg.factor * Math.cos(0)))
+        .attr("x", () => levelFactor * (1 - cfg.factor * Math.sin(0)))
+        .attr("y", () => levelFactor * (1 - cfg.factor * Math.cos(0)))
         .attr("class", "legend")
         .style("font-family", "sans-serif")
         .style("font-size", "10px")
@@ -134,7 +135,7 @@ var RadarChart = {
       .attr("x2", (d, i) => cfg.w / 2 * (1 - cfg.factor * Math.sin(i * cfg.radians / total)))
       .attr("y2", (d, i) => cfg.h / 2 * (1 - cfg.factor * Math.cos(i * cfg.radians / total)))
       .attr("class", "line")
-      .style("stroke", "springgreen")
+      .style("stroke", "gray")
       .style("stroke-width", "1px");
 
     axis.append("text")
@@ -151,27 +152,32 @@ var RadarChart = {
 
     data.forEach((y, x) => {
       let dataValues = [];
-
       g.selectAll(".nodes")
         .data(y.vote, (d, i) => {
-          return dataValues.push([
-            cfg.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
-            cfg.h / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-          ]);
+          return dataValues.push({
+            name: y.name,
+            positions: [
+              cfg.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
+              cfg.h / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
+          ]});
         });
-
+      
       dataValues.push(dataValues[0]);
+
+      
+      const fillColor = chroma(colors.colors[series]).alpha(.1).css()
+      const strokeColor = chroma(colors.colors[series]).alpha(1).css()
 
       g.selectAll(".area")
         .data([dataValues])
         .enter()
         .append("polygon")
         .attr("class", "radar-chart-serie" + series)
-        .style("stroke-width", "2px")
-        .style("stroke", 'tomato')
-        .attr("points", (d, i) => ` ${d[0]}, ${d[1]} `)
-        .style("fill", 'gold')
-        .style("fill-opacity", cfg.opacityArea)
+        .style("stroke-width", "1px")
+        .style("stroke", `${strokeColor}`)
+        .attr("points", (d, i) => d.map(t => `${t.positions[0]} ${t.positions[1]}` ))
+        .style("fill", `${fillColor}`)
+        // .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', (d) => {
           let z = "polygon." + d3.select(this).attr("class");
           g.selectAll("polygon")
