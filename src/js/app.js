@@ -1,9 +1,16 @@
 import * as d3 from 'd3'
 import '../styles.css'
 import dataset from './data.json'
-import colors from '../colors.json'
+// import colors from '../colors.json'
 import chroma from 'chroma-js'
 const { data } = dataset
+
+console.log(data)
+
+const coreTeam = data.filter(d => d.core === true)
+const colors = chroma.scale([chroma.random(), chroma.random()]).colors(data.length)
+const colorsCore = chroma.scale([chroma.random(), chroma.random()]).colors(coreTeam.length)
+const colorsContrib = chroma.scale([chroma.random(), chroma.random()]).colors(data.length)
 
 const margin = {
   top: 20,
@@ -37,7 +44,7 @@ legend.append("rect")
   .attr("x", 0)
   .attr("width", 19)
   .attr("height", 19)
-  .attr("fill", (d, i) => colors.colors[i]);
+  .attr("fill", (d, i) => colorsCore[i]);
 
 legend.append("text")
   .attr("x", 24)
@@ -159,25 +166,24 @@ var RadarChart = {
             positions: [
               cfg.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),
               cfg.h / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.cos(i * cfg.radians / total))
-          ]});
+          ]}); 
         });
       
       dataValues.push(dataValues[0]);
 
       
-      const fillColor = chroma(colors.colors[series]).alpha(.1).css()
-      const strokeColor = chroma(colors.colors[series]).alpha(1).css()
+      const fillColor = chroma(colors[series]).alpha(.1).css()
+      const strokeColor = chroma(colors[series]).alpha(1).css()
 
       g.selectAll(".area")
         .data([dataValues])
         .enter()
-        .append("polygon")
+        .append("path")
         .attr("class", "radar-chart-serie" + series)
         .style("stroke-width", "1px")
         .style("stroke", `${strokeColor}`)
-        .attr("points", (d, i) => d.map(t => `${t.positions[0]} ${t.positions[1]}` ))
+        .attr("d", (d, i) => ` M ${d.map(t => `${t.positions[0]} ${t.positions[1]} C ` )}`)
         .style("fill", `${fillColor}`)
-        // .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', (d) => {
           let z = "polygon." + d3.select(this).attr("class");
           g.selectAll("polygon")
